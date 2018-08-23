@@ -5,7 +5,7 @@ class EventListPeople extends Component {
   render () {
     return (
       <List.Item>
-        <h1>Event List People</h1>
+        <Image as='a' size='mini' circular src='https://randomuser.me/api/portraits/women/42.jpg' />
       </List.Item>
     )
   }
