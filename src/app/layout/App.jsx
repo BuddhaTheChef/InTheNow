@@ -6,7 +6,7 @@ import NavBar from '../../features/nav/NavBar/NavBar';
 class App extends Component {
   render() {
     return (
-      <div >
+      <div>
         <NavBar/>
         <Container className="main">
           <EventDashboard/>
