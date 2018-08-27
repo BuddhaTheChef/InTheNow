@@ -8,7 +8,7 @@ const eventsNow = [
   {
     id: '1',
     title: 'Trip to Tower of London',
-    date: '2018-03-27T11:00:00+00:00',
+    date: '2018-03-27',
     category: 'culture',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
@@ -32,7 +32,7 @@ const eventsNow = [
   {
     id: '2',
     title: 'Trip to Punch and Judy Pub',
-    date: '2018-03-28T14:00:00+00:00',
+    date: '2018-03-28',
     category: 'drinks',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
@@ -61,7 +61,8 @@ class EventDashboard extends Component {
 
     this.state = {
       events: eventsNow,
-      isOpen: false
+      isOpen: false,
+      selectedEvent: null
     }
 
     // this.handleFormOpen = this.handleFormOpen.bind(this);
@@ -70,6 +71,7 @@ class EventDashboard extends Component {
 
 handleFormOpen = () => {
   this.setState({
+    selectedEvent: null,
     isOpen: true
   })
 }
@@ -77,6 +79,13 @@ handleFormOpen = () => {
 handleCancel = () => {
   this.setState({
     isOpen: false
+  })
+}
+
+handleEditEvent = (eventToUpdate) => () => {
+  this.setState({
+    selectedEvent: eventToUpdate,
+    isOpen: true
   })
 }
 
@@ -91,15 +100,16 @@ handleCreatedEvent = (newEvent) => {
 }
 
   render() {
+    const {selectedEvent} = this.state;
     return (
       <Grid>
         <Grid.Column width={10}>
-          <EventList events={this.state.events} />
+          <EventList onEventEdit={this.handleEditEvent} events={this.state.events} />
         </Grid.Column>
         <Grid.Column width={6}>
           <Button onClick={this.handleFormOpen} positive content='Create Event' />
           {this.state.isOpen &&
-          <EventForm createEvent={this.handleCreatedEvent} handleCancel={this.handleCancel} /> }
+          <EventForm selectedEvent={selectedEvent} createEvent={this.handleCreatedEvent} handleCancel={this.handleCancel} /> }
         </Grid.Column>
       </Grid>
     )
