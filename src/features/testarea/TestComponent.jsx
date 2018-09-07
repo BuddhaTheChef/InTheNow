@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { incrementCounter, decrementCounter } from './testActions'
+
+
+const actions = {
+  incrementCounter,
+  decrementCounter
+}
+
 
 class TestComponent extends Component {
   render() {
@@ -16,4 +24,4 @@ const mapState = (state) => ({
   data: state.test.data
 })
 
-export default connect(mapState)(TestComponent);
+export default connect(mapState, actions)(TestComponent);
