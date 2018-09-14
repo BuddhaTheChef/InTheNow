@@ -5,6 +5,7 @@ import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import cuid from 'cuid';
 import { createEvent, updateEvent } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
+import TextArea from '../../../app/common/form/TextArea';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -56,7 +57,7 @@ render() {
         <Form onSubmit={this.onFormSubit}>
           <Field name='title' type='text' component={TextInput} placeholder='Give Event A Name'/>
           <Field name='Category' type='text' component={TextInput} placeholder='What is your event about?'/>
-          <Field name='Description' type='text' component={TextInput} placeholder='Tell us about the event?'/>
+          <Field name='Description' type='text' component={TextArea} rows={4} placeholder='Tell us about the event?'/>
         <Header sub="sub" color='teal' content='Event Location Details'/>
           <Field name='City' type='text' component={TextInput} placeholder='Event City'/>
           <Field name='Venue' type='text' component={TextInput} placeholder='Event Venue'/>
