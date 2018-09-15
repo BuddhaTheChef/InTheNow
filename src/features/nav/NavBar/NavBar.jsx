@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Menu, Container, Button} from 'semantic-ui-react';
+import { Menu, Container, Button } from 'semantic-ui-react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignedIn from '../Menus/SignedIn';
 import SignedOut from '../Menus/SignedOut';
@@ -27,7 +27,7 @@ class NavBar extends Component {
     return (
      <Menu inverted="inverted" fixed="top">
       <Container>
-        <Menu.Item as={Link} to='/' header="header">
+        <Menu.Item as={Link} to='/' header='header'>
           <img src="/assets/logo.png" alt="logo"/>
           EventNow
         </Menu.Item>
