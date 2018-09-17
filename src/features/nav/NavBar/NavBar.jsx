@@ -25,9 +25,9 @@ class NavBar extends Component {
   render() {
     const {authenticated} = this.state;
     return (
-     <Menu inverted="inverted" fixed="top">
+     <Menu inverted fixed="top">
       <Container>
-        <Menu.Item as={Link} to='/' header='header'>
+        <Menu.Item as={Link} to='/' header>
           <img src="/assets/logo.png" alt="logo"/>
           EventNow
         </Menu.Item>
@@ -40,8 +40,8 @@ class NavBar extends Component {
           <Button as={Link}  to='/createEvent' floated="right" positive inverted content="Create Event"/>
         </Menu.Item>}
         <Menu.Item position="right">
-          <Button basic="basic" inverted="inverted" content="Login"/>
-          <Button basic="basic" inverted="inverted" content="Sign Out" style={{
+          <Button basic inverted content="Login"/>
+          <Button basic inverted content="Sign Out" style={{
               marginLeft: '0.5em'
             }}/>
         </Menu.Item>
