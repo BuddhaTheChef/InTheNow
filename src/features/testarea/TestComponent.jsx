@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
-import Script from 'react-load-script';
+import { Button, Icon } from 'semantic-ui-react';
+// import Script from 'react-load-script';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { incrementCounter, decrementCounter } from './testActions'
-
-
+import GoogleMapReact from 'google-map-react';
 
 const actions = {
   incrementCounter,
   decrementCounter
 }
 
+const Marker = () => <Icon name='marker' size='big' color='red' />
 
 class TestComponent extends Component {
+
+  static defaultProps = {
+  center: {
+    lat: 59.95,
+    lng: 30.33
+  },
+  zoom: 11
+};
 
   state = {
     address: '',
@@ -44,10 +52,12 @@ onChange = (address) => this.setState({address});
     const { incrementCounter, decrementCounter, data } = this.props;
     return (
       <div>
-        <Script
+        {/* <Script
+          ////////////////////////
           url='API_KEY'
+          ////////////////////////
           onLoad={this.handleScriptLoad}
-      />
+      /> */}
 
         <h1>Test AREA</h1>
         <h3>The answer is: {data}</h3>
@@ -59,6 +69,21 @@ onChange = (address) => this.setState({address});
           {this.state.scriptLoaded && <PlacesAutocomplete inputProps={inputProps} />}
           <button type="submit">Submit</button>
         </form>
+        <div style={{ height: '300px', width: '100%' }}>
+  <GoogleMapReact
+    /////////////////////////////////////////
+    bootstrapURLKeys={{ key: 'API_KEY' }}
+   /////////////////////////////////////////
+    defaultCenter={this.props.center}
+    defaultZoom={this.props.zoom}
+  >
+    <Marker
+      lat={59.955413}
+      lng={30.337844}
+      text={'Kreyser Avrora'}
+    />
+  </GoogleMapReact>
+</div>
       </div>
     )
   }
