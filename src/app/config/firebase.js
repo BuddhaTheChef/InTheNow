@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "{ENTER API KEY}",
+  apiKey: "API_URL_KEY",
   authDomain: "eventnow-60c55.firebaseapp.com",
   databaseURL: "https://eventnow-60c55.firebaseio.com",
   projectId: "eventnow-60c55",
@@ -11,6 +11,10 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig);
-firebase.firestore();
+const firestore = firebase.firestore();
+const settings = {
+  timestampsInSnapshots: true
+}
+firestore.settings(settings);
 
 export default firebase;
