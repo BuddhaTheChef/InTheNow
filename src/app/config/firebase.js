@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import '@firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "{API_KEY}",
+  apiKey: "AIzaSyA1tU59sPmtb8w1kZBsfumJdGXTFSmnPAA",
   authDomain: "eventnow-60c55.firebaseapp.com",
   databaseURL: "https://eventnow-60c55.firebaseio.com",
   projectId: "eventnow-60c55",
