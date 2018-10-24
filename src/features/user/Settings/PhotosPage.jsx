@@ -65,7 +65,7 @@ class PhotosPage extends Component {
                     <Grid.Row />
                     <Grid.Column width={4}>
                         <Header color='teal' sub content='Step 1 - Add Photo'/>
-                        <Dropzone onDrop={this.onDrop} mulitple={false}>
+                        <Dropzone onDrop={this.onDrop} mulitple="false">
                           <div style={{paddingTop: '30px', textAlign:'center' }}>
                             <Icon name='upload' size='huge' />
                             <Header content='Drop Image Here or Click to Add' />
@@ -101,7 +101,7 @@ class PhotosPage extends Component {
                             />
                             <Button.Group>
                               <Button onClick={this.uploadImage} style={{width: '100px'}} positive icon='check'/>
-                              <Button onClick={this.cancelCrop} style={{width: '100px'}} icon='close'/> 
+                              <Button onClick={this.cancelCrop} style={{width: '100px'}} icon='close'/>
                             </Button.Group>
                           </div>
                         )}

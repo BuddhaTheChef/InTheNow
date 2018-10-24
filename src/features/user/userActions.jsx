@@ -29,7 +29,7 @@ export const updateProfile = (user) =>
       }
       try {
       //upload the file to firebase storage
-      let uploadedFile = await firebase.uploadedFile(path, file, null, options);
+      let uploadedFile = await firebase.uploadFile(path, file, null, options);
       //get url of image
       let downloadURL = await uploadedFile.uploadTaskSnapshot.downloadURL;
       //get user doc
@@ -41,7 +41,7 @@ export const updateProfile = (user) =>
         });
         await user.updateProfile({
           photoURL: downloadURL
-        })
+        });
       }
       //add new photo to collection
       return await firestore.add({
