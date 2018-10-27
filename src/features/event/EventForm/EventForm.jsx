@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
-import cuid from 'cuid';
 import moment from 'moment';
 import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
@@ -65,7 +64,7 @@ class EventForm extends Component {
 
   handleScriptLoaded = () => this.setState({scriptLoaded:true});
 
-  handleCitySelect = (selectedCity) => {
+  handleCitySelect = selectedCity => {
     geocodeByAddress(selectedCity)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
@@ -78,7 +77,7 @@ class EventForm extends Component {
     })
   }
 
-  handleVenueSelect = (selectedVenue) => {
+  handleVenueSelect = selectedVenue => {
     geocodeByAddress(selectedVenue)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
@@ -98,13 +97,7 @@ class EventForm extends Component {
       this.props.updateEvent(values);
       this.props.history.goBack();
   } else {
-    const newEvent = {
-      ...values,
-      id: cuid(),
-      hostPhotoURL: '/assets/user.png',
-      hostedBy: 'Bob'
-    }
-    this.props.createEvent(newEvent)
+    this.props.createEvent(values)
     this.props.history.push('/events')
   }
 }
@@ -112,21 +105,21 @@ class EventForm extends Component {
 render() {
   const {invalid, submitting, pristine} = this.props;
   return (
-   <Grid >
+   <Grid>
      <Script
        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       url='{https://maps.googleapis.com/maps/api/js?key=AIzaSyA6opUvGrtqDW2byMPiNqBPzykwxL3HrE4=places}'
+       url='https://maps.googleapis.com/maps/api/js?key=AIzaSyCh2Ly491rN5TAa5eHxDR4zS0K-cSe57bc=places'
        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
        onLoad={this.handleScriptLoaded}
      />
     <Grid.Column width={10}>
       <Segment>
-        <Header sub="sub" color='teal' content='Event Details'/>
+        <Header sub color='teal' content='Event Details'/>
         <Form onSubmit={this.props.handleSubmit(this.onFormSubit)}>
           <Field name='title' type='text' component={TextInput} placeholder='Give Event A Name'/>
           <Field name='category' type='text' component={SelectInput} options={category} placeholder='What is your event about?'/>
           <Field name='description' type='text' component={TextArea} rows={4} placeholder='Tell us about the event?'/>
-        <Header sub="sub" color='teal' content='Event Location Details'/>
+        <Header sub color='teal' content='Event Location Details'/>
           <Field
             name='city'
             type='text'
@@ -157,14 +150,15 @@ render() {
              showTimeSelect
              placeholder='Date & time of event'
            />
-          <Button disabled={ invalid || submitting || pristine } positive="positive" type="submit">
+          <Button disabled={ invalid || submitting || pristine } positive type="submit">
             Submit
           </Button>
           <Button onClick={this.props.history.goBack} type="button">Cancel</Button>
         </Form>
       </Segment>
     </Grid.Column>
-  </Grid>)
+  </Grid>
+)
 }
 }
 

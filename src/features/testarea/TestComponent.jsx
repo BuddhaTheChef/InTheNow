@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 // import Script from 'react-load-script';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+// import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { incrementAsync, decrementAsync } from './testActions';
 import { openModal } from '../modals/modalActions'
 
@@ -14,40 +14,40 @@ const actions = {
 
 class TestComponent extends Component {
 
-  static defaultProps = {
-  center: {
-    lat: 59.95,
-    lng: 30.33
-  },
-  zoom: 11
-};
+//   static defaultProps = {
+//   center: {
+//     lat: 59.95,
+//     lng: 30.33
+//   },
+//   zoom: 11
+// };
 
-  state = {
-    address: '',
-    scriptLoaded: false
-  }
-
-  handleScriptLoad = () => {
-    this.setState({ scriptLoaded: true })
-  }
+  // state = {
+  //   address: '',
+  //   scriptLoaded: false
+  // }
+  //
+  // handleScriptLoad = () => {
+  //   this.setState({ scriptLoaded: true })
+  // }
 
   handleFormSubmit = (event) => {
   event.preventDefault()
-
-  geocodeByAddress(this.state.address)
-    .then(results => getLatLng(results[0]))
-    .then(latLng => console.log('Success', latLng))
-    .catch(error => console.error('Error', error))
 }
-
-onChange = (address) => this.setState({address});
+//   geocodeByAddress(this.state.address)
+//     .then(results => getLatLng(results[0]))
+//     .then(latLng => console.log('Success', latLng))
+//     .catch(error => console.error('Error', error))
+// }
+//
+// onChange = (address) => this.setState({address});
 
   render() {
-      console.log(this.props)
-    const inputProps = {
-      value: this.state.address,
-      onChange: this.onChange,
-    }
+    //   console.log(this.props)
+    // const inputProps = {
+    //   value: this.state.address,
+    //   onChange: this.onChange,
+    // }
     const { incrementAsync, decrementAsync, data, openModal, loading } = this.props;
     return (
       <div>
@@ -65,18 +65,19 @@ onChange = (address) => this.setState({address});
         <Button onClick={() => openModal('TestModal',{data: 25})} color='yellow' content='Open Modal' />
         <br/>
         <br/>
-        <form onSubmit={this.handleFormSubmit}>
+        {/* <form onSubmit={this.handleFormSubmit}>
           {this.state.scriptLoaded && <PlacesAutocomplete inputProps={inputProps} />}
           <button type="submit">Submit</button>
-        </form>
+        </form> */}
       </div>
     )
   }
 }
 
-const mapState = (state) => ({
-  data: state.test.data,
-  loading: state.test.loading
-})
+//
+// const mapState = (state) => ({
+//   data: state.test.data,
+//   loading: state.test.loading
+// })
 
-export default connect(mapState, actions)(TestComponent);
+export default connect( actions)(TestComponent);
