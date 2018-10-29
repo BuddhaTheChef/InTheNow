@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { reduxForm, Field } from 'redux-form';
 import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
-import moment from 'moment';
+// import moment from 'moment';
 import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Script from 'react-load-script'
-import { createEvent, updateEvent } from '../eventActions';
+import { createEvent, updateEvent, cancelToggle } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
@@ -25,13 +25,15 @@ const mapState = (state) => {
   }
 
   return {
-    initialValues: event
+    initialValues: event,
+    event
   };
 };
 
 const actions = {
   createEvent,
-  updateEvent
+  updateEvent,
+  cancelToggle
 }
 
 const category = [
@@ -112,12 +114,12 @@ class EventForm extends Component {
 }
 
 render() {
-  const {invalid, submitting, pristine} = this.props;
+  const {invalid, submitting, pristine, event, cancelToggle} = this.props;
   return (
    <Grid>
      <Script
        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       url='apiurl'
+       url='https://maps.googleapis.com/maps/api/js?key=AIzaSyCh2Ly491rN5TAa5eHxDR4zS0K-cSe57bc&libraries=places'
        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
        onLoad={this.handleScriptLoaded}
      />
@@ -163,6 +165,13 @@ render() {
             Submit
           </Button>
           <Button onClick={this.props.history.goBack} type="button">Cancel</Button>
+          <Button
+            onClick={() => cancelToggle(!event.cancelled, event.id)}
+            type="button"
+            color={event.cancelled ? 'green' : 'red'}
+            floated="right"
+            content={event.cancelled ? 'Reactivate Events' : 'Cancel Event'}
+          />
         </Form>
       </Segment>
     </Grid.Column>
