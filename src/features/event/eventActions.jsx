@@ -51,9 +51,13 @@ export const updateEvent = (event) => {
 export const cancelToggle = (cancelled, eventId) =>
   async (dispatch, getState, {getFirestore}) => {
     const firestore = getFirestore();
+    const message = cancelled ? 'Are you sure you want to cancel the event?' : 'This will reactivate the event. Are you sure?'
     try {
-      await firestore.update(`events/${eventId}`, {
-        cancelled: cancelled
+      toastr.confirm(message, {
+        onOk: () =>
+        firestore.update(`events/${eventId}`, {
+          cancelled: cancelled
+        })
       })
     }
     catch(error) {
