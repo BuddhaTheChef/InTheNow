@@ -67,11 +67,11 @@ class EventForm extends Component {
   async componentDidMount() {
     const {firestore, match} = this.props;
     await firestore.setListener(`events/${match.params.id}`);
-    // if(event.exists) {
-    //   this.setState({
-    //     venueLatLng: event.data().venueLatLng
-    //   })
-    // }
+  }
+
+  async componentWillUnmount() {
+    const {firestore, match} = this.props;
+    await firestore.unsetListener(`events/${match.params.id}`);
   }
 
   handleScriptLoaded = () => this.setState({scriptLoaded:true});
@@ -122,7 +122,7 @@ render() {
    <Grid>
      <Script
        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       url='https://maps.googleapis.com/maps/api/js?key=AIzaSyCh2Ly491rN5TAa5eHxDR4zS0K-cSe57bc&libraries=places'
+       url='api-url'
        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
        onLoad={this.handleScriptLoaded}
      />
