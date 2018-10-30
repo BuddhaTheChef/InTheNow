@@ -2,13 +2,13 @@ import React,{Component} from 'react';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { Grid } from 'semantic-ui-react';
-import {toastr} from 'react-redux-toastr';
+// import {toastr} from 'react-redux-toastr';
 import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedChat from './EventDetailedChat';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import {objectToArray} from '../../../app/common/util/helpers';
-import { goingToEvent } from '../../user/userActions';
+import { goingToEvent, cancelGoingToEvent } from '../../user/userActions';
 
 const mapState = (state) => {
 
@@ -24,28 +24,35 @@ const mapState = (state) => {
 }
 
 const actions = {
-  goingToEvent
+  goingToEvent,
+  cancelGoingToEvent
 }
 
 class EventDetailedPage extends Component {
   async componentDidMount(){
-    const { firestore, match} = this.props;
+    const { firestore, match } = this.props;
     await firestore.setListener(`events/${match.params.id}`)
   }
 
   async componentWillUnmount() {
-    const { firestore, match} = this.props;
+    const { firestore, match } = this.props;
     await firestore.unsetListener(`events/${match.params.id}`)
   }
 
   render() {
-    const {event, auth, goingToEvent} = this.props;
+    const {event, auth, goingToEvent, cancelGoingToEvent} = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees);
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     return (<Grid>
       <Grid.Column width={10}>
-        <EventDetailedHeader event={event} isHost={isHost} isGoing={isGoing} goingToEvent={goingToEvent} />
+        <EventDetailedHeader
+          event={event}
+          isHost={isHost}
+          isGoing={isGoing}
+          goingToEvent={goingToEvent}
+          cancelGoingToEvent={cancelGoingToEvent}
+        />
         <EventDetailedInfo event={event}/>
         <EventDetailedChat/>
       </Grid.Column>
