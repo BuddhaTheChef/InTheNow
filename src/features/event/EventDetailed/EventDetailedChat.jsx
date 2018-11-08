@@ -58,6 +58,7 @@ class EventDetailedChat extends Component {
                             eventId={eventId}
                             form={`reply_${comment.id}`}
                             closeForm={this.handleCloseReplyForm}
+                            parentId={comment.id}
                             />
                         )}
                       </Comment.Actions>
@@ -65,7 +66,7 @@ class EventDetailedChat extends Component {
                   </Comment>
                 ))}
                 </Comment.Group>
-                <EventDetailedChatForm addEventComment={addEventComment} eventId={eventId} form={'newComment'} />
+                <EventDetailedChatForm parentId={0} addEventComment={addEventComment} eventId={eventId} form={'newComment'} />
               </Segment>
             </div>
     )
