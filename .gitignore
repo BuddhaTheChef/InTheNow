@@ -25,3 +25,5 @@ PlaceInput.jsx
 
 EventDetailedMap
 EventDetailedMap.jsx
+
+functions/node_modules/**
