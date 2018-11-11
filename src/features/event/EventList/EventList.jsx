@@ -8,7 +8,7 @@ class EventList extends Component {
     return (
       <div>
         {events && events.length !== 0 && (
-          <InfiniteScroll pageStart={0} loadMore={getNextEvents} hasMore={!loading && moreEvents} initalLoad={false}>
+          <InfiniteScroll pageStart={0} loadMore={getNextEvents} hasMore={!loading && moreEvents} initialLoad={false}>
           {events && events.map((event) => (
             <EventListItem key={event.id} event={event} />
           ))}
