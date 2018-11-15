@@ -148,7 +148,7 @@ class PhotosPage extends Component {
                             />
                             <Button.Group>
                               <Button onClick={this.uploadImage} loading={loading} style={{width: '100px'}} positive icon='check'/>
-                              <Button onClick={this.cancelCrop} disabl={loading} style={{width: '100px'}} icon='close'/>
+                              <Button onClick={this.cancelCrop} disable={loading} style={{width: '100px'}} icon='close'/>
                             </Button.Group>
                           </div>
                         )}

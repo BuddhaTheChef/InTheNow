@@ -204,7 +204,7 @@ export const followUser = userToFollow => async(dispatch, getState, {getFirestor
   const following = {
     photoURL: userToFollow.photoURL|| 'assets/user.png',
     city: userToFollow.city || 'Unkown City',
-    dispalayName: userToFollow.displayName
+    displayName: userToFollow.displayName
   }
   try {
     await firestore.set(
