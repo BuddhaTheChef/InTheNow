@@ -8,10 +8,11 @@ import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedChat from './EventDetailedChat';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import {objectToArray, createDataTree} from '../../../app/common/util/helpers';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { goingToEvent, cancelGoingToEvent } from '../../user/userActions';
 import { addEventComment } from '../eventActions';
 import { openModal } from '../../modals/modalActions'
-// import {toastr} from 'react-redux-toastr';
+import {toastr} from 'react-redux-toastr';
 
 const mapState = (state, ownProps) => {
 
@@ -21,6 +22,7 @@ const mapState = (state, ownProps) => {
     event = state.firestore.ordered.events[0];
   }
   return {
+    requesting: state.firestore.status.requesting,
     event,
     loading: state.async.loading,
     auth: state.firebase.auth,
@@ -37,9 +39,22 @@ const actions = {
 }
 
 class EventDetailedPage extends Component {
+
+  state = {
+    initialLoading: true
+  }
+
   async componentDidMount(){
     const { firestore, match } = this.props;
+    let event = await firestore.get(`events/${match.params.id}`)
+    if(!event.exists){
+      toastr.error('Not Found', "This event doesn't exist");
+      this.props.history.push('/error')
+    }
     await firestore.setListener(`events/${match.params.id}`)
+    this.setState({
+      initialLoading: false
+    })
   }
 
   async componentWillUnmount() {
@@ -48,12 +63,16 @@ class EventDetailedPage extends Component {
   }
 
   render() {
-    const { openModal, event, loading, auth, goingToEvent, cancelGoingToEvent, addEventComment, eventChat } = this.props;
+    const { openModal, event, loading, auth, goingToEvent, cancelGoingToEvent, addEventComment, eventChat, requesting, match } = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees);
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
     const authenticated = auth.isLoaded && !auth.isEmpty;
+    const loadingEvent = requesting[`events/${match.params.id}`]
+
+    if(loadingEvent || this.state.initialLoading) return <LoadingComponent inverted={true}/>
+
     return (<Grid>
       <Grid.Column width={10}>
         <EventDetailedHeader
