@@ -64,7 +64,9 @@ class EventDetailedPage extends Component {
 
   render() {
     const { openModal, event, loading, auth, goingToEvent, cancelGoingToEvent, addEventComment, eventChat, requesting, match } = this.props;
-    const attendees = event && event.attendees && objectToArray(event.attendees);
+    const attendees = event && event.attendees && objectToArray(event.attendees).sort(function(a,b) {
+      return a.joinDate = b.joinDate
+    });
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
@@ -99,5 +101,5 @@ class EventDetailedPage extends Component {
 export default compose(
   withFirestore,
   connect(mapState, actions),
-  firebaseConnect(props => [`event_chat/${props.match.params.id}`])
+  firebaseConnect(props => props.auth.isLoaded && !props.auth.isEmpty &&[`event_chat/${props.match.params.id}`])
 )(EventDetailedPage);
